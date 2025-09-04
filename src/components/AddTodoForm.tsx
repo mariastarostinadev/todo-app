@@ -12,7 +12,6 @@ export default function AddTodoForm({ handleAddTodo }: AddTodoFormProps) {
       onSubmit={(event) => {
         event.preventDefault();
         handleAddTodo(todoText);
-
         setTodoText("");
       }}
     >

@@ -4,12 +4,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import TodoList from "./TodoList";
-
-export type Todo = {
-  id: number;
-  text: string;
-  isCompleted: boolean;
-}
+import { Todo } from "../lib/types";
 
 function App() {
   //state

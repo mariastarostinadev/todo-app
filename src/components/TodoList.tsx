@@ -1,4 +1,4 @@
-import { Todo } from "./App";
+import { Todo } from "../lib/types";
 import DeleteButton from "./DeleteButton";
 
 type TodoListProps = {
@@ -15,8 +15,8 @@ export default function TodoList({
   return (
     <ul>
       {todos.length === 0 && (
-        <li className="h-full flex justify-center items-center  text-[#967259] text-[18px] opacity-80 font-semibold">
-          Start by adding a todo
+        <li className="h-full flex justify-center items-center  text-[#967259] text-[18px] opacity-50 font-semibold">
+          Start by adding a todo..
         </li>
       )}
       {todos.map((todo) => (
