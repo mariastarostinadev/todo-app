@@ -1,10 +1,17 @@
+import { Todo } from "./App";
 import DeleteButton from "./DeleteButton";
+
+type TodoListProps = {
+  todos: Todo[];
+  handleToggleTodo: (id: number) => void;
+  handleDeleteTodo: (id: number) => void;
+}
 
 export default function TodoList({
   todos,
   handleToggleTodo,
   handleDeleteTodo,
-}) {
+}: TodoListProps) {
   return (
     <ul>
       {todos.length === 0 && (
@@ -18,7 +25,7 @@ export default function TodoList({
           className={
             "flex justify-between items-center px-8 h-[60px] text-[18px] cursor-pointer border-b border-black/[8%]"
           }
-          onClick={handleToggleTodo(todo.id)}
+          onClick={() => handleToggleTodo(todo.id)}
         >
           <span
             className={`${
