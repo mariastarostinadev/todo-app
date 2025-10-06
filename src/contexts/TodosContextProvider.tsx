@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Todo } from "../lib/types";
 
 type TodosContextProviderProps = {
@@ -16,7 +16,11 @@ type TTodosContext = {
 
 export const TodosContext = createContext<TTodosContext | null>(null);
 
-export default function TodosContextProvider({children}: TodosContextProviderProps) {
+
+
+export default function TodosContextProvider({
+  children,
+}: TodosContextProviderProps) {
   //state
   const [todos, setTodos] = useState<Todo[]>([]);
 
@@ -57,6 +61,21 @@ export default function TodosContextProvider({children}: TodosContextProviderPro
   const handleDeleteTodo = (id: number) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
+
+  //side effects
+
+  // //fetching data from url, runs after render
+  useEffect(()=>{
+    const fetchTodos = async ()=>{
+      const response = await fetch("https://bytegrad.com/course-assets/api/todos");
+      const todos = await response.json();
+      setTodos(todos);
+    };
+    fetchTodos();
+  },[])
+  
+
+ 
 
   return (
     <TodosContext.Provider
