@@ -16,13 +16,21 @@ type TTodosContext = {
 
 export const TodosContext = createContext<TTodosContext | null>(null);
 
-
+//read data from localStorage
+const getInitTodos = () => {
+  const savedTodos = localStorage.getItem("todos");
+  if (savedTodos) {
+    return JSON.parse(savedTodos);
+  } else {
+    return [];
+  }
+};
 
 export default function TodosContextProvider({
   children,
 }: TodosContextProviderProps) {
   //state
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(getInitTodos);
 
   //derived state
   const totalNumberOfTodos = todos.length;
@@ -65,17 +73,20 @@ export default function TodosContextProvider({
   //side effects
 
   // //fetching data from url, runs after render
-  useEffect(()=>{
-    const fetchTodos = async ()=>{
-      const response = await fetch("https://bytegrad.com/course-assets/api/todos");
-      const todos = await response.json();
-      setTodos(todos);
-    };
-    fetchTodos();
-  },[])
+  // useEffect(()=>{
+  //   const fetchTodos = async ()=>{
+  //     const response = await fetch("https://bytegrad.com/course-assets/api/todos");
+  //     const todos = await response.json();
+  //     setTodos(todos);
+  //   };
+  //   fetchTodos();
+  // },[])
   
 
- 
+  //add todos to local storage
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <TodosContext.Provider
