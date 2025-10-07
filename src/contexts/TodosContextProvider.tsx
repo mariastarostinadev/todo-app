@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { Todo } from "../lib/types";
 import { isAuthenticated } from "@kinde-oss/kinde-auth-react/utils";
+import { initialTodos, MAX_FREE_TODOS } from "../lib/constants";
 
 type TodosContextProviderProps = {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ const getInitTodos = () => {
   if (savedTodos) {
     return JSON.parse(savedTodos);
   } else {
-    return [];
+    return (initialTodos);
   }
 };
 
@@ -41,8 +42,8 @@ export default function TodosContextProvider({
 
   //event handlers / actions
   const handleAddTodo = (todoText: string) => {
-    if (todos.length >= 3 && !isAuthenticated) {
-      alert("Please log in to add more todos");
+    if (todos.length === MAX_FREE_TODOS && !isAuthenticated) {
+      alert(`Please log in to add more than ${MAX_FREE_TODOS} todos`);
       return;
     } else {
       setTodos((prev) => [
