@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Todo } from "../lib/types";
+import { isAuthenticated } from "@kinde-oss/kinde-auth-react/utils";
 
 type TodosContextProviderProps = {
   children: React.ReactNode;
@@ -40,7 +41,7 @@ export default function TodosContextProvider({
 
   //event handlers / actions
   const handleAddTodo = (todoText: string) => {
-    if (todos.length >= 3) {
+    if (todos.length >= 3 && !isAuthenticated) {
       alert("Please log in to add more todos");
       return;
     } else {
@@ -81,7 +82,6 @@ export default function TodosContextProvider({
   //   };
   //   fetchTodos();
   // },[])
-  
 
   //add todos to local storage
   useEffect(() => {
